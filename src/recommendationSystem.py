@@ -1,6 +1,7 @@
 import numpy as np
 import math
 from tabulate import tabulate
+from collections import OrderedDict
 import re
 
 # Clase que almacena los atributos y métodos necesarios de un sistema de recomendación
@@ -28,13 +29,32 @@ class RecommendationSystem:
   # Método para calcular los distintos parámetros de un término
   # i --> indice del documento a obtener la tabla
   def modelContent(self, i): 
-    # for i in range(self.num_of_documents):
-    # for i in range(1): # Cambiar esto por el de arriba despues
-      for j in range(len(self.documentsArray[i])):
-        tf = 0
-        tf = self.calculateTF(self.documentsArray[i], self.documentsArray[i][j])
-        idf = self.calculateIDF(self.documentsArray[i][j])
-        self.setTable(j, self.documentsArray[i][j], tf, idf, tf*idf)
+
+    duplicate = []
+
+    for j in range(len(self.documentsArray[i])):
+      # Eliminar las palabras duplicadas de la tabla
+      flag = False
+      for k in range(len(duplicate)):
+        if self.documentsArray[i][j] == duplicate[k]:
+          flag = True
+
+      if flag:
+        continue
+
+      # Calcular TF(x,y)
+      tf = 0
+      tf = self.calculateTF(self.documentsArray[i], self.documentsArray[i][j])
+      # Si el tf > 1 significa que la palabra esta duplicada
+      if tf > 1:
+        duplicate.append(self.documentsArray[i][j])
+
+      # Calcular IDF(x)
+      idf = self.calculateIDF(self.documentsArray[i][j])
+    
+      # Introducir cálculos en la tabla
+      self.setTable(j, self.documentsArray[i][j], tf, idf, tf*idf)
+
 
   # Método que recibe un array (document), y debe devolver un array con el número de ocurrencias de cada término
   def calculateTF(self, document, term):
@@ -67,6 +87,8 @@ class RecommendationSystem:
     linea = linea.lower()
     # Eliminar los números
     linea = re.sub(r'[0-9]+', '', linea)
+    # Eliminar los \n
+    linea = re.sub(r'\n', '', linea)
     # Convertirmos el string a un array usando como delimitador el espacio
     arrayLinea = linea.split(" ")
     # Eliminamos el último elemento ('\n')
