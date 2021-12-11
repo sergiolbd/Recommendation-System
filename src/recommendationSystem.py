@@ -16,6 +16,9 @@ class RecommendationSystem:
 
     self.table = [['Índice del Término', 'Término', 'TF', 'IDF', 'TF-IDF']]
 
+    self.simTable = []
+    self.setSimTable()
+
   # Leer el fichero txt pasado por parámetros
   def readFile(self, file):
     f = open(file, "r")
@@ -78,6 +81,29 @@ class RecommendationSystem:
   # Configurar valores de la tabla
   def setTable(self, index, term, tf, idf, tfidf):
       self.table.append([index, term, tf, idf, tfidf])
+
+  # Setear tablero inicial
+  def setSimTable(self):
+    docs = []
+    for i in range(self.num_of_documents):
+      docs.append("doc" + str(i))
+
+    self.simTable.append(docs)
+
+    for j in range(self.num_of_documents):
+      docs = []
+      for i in range(self.num_of_documents):
+        if i == 0:
+          docs.append("doc" + str(j))
+        else:
+          docs.append(0)
+
+      self.simTable.append(docs)
+
+  # Mostrar tabla similitud por pantalla
+  def printSimTable(self):
+    print(tabulate(self.simTable, headers='firstrow', tablefmt='grid'))
+
 
   # Formatear los documentos
   def cleanDocument(self, linea):
