@@ -2,7 +2,6 @@ import os
 import argparse
 from recommendationSystem import RecommendationSystem as RS
 
-
 # Paso de parámetros por línea de comandos
 parser = argparse.ArgumentParser()
 parser.add_argument("file", type=str, help="input file txt")
@@ -15,8 +14,11 @@ if (os.path.exists('./doc/' + args.file)):
   A = RS(file)
 
   # Seleccionamos la tabla a observar
-  A.modelContent(args.numofdocument)
-  A.printTable()
+  print("\n------------------------ Documento " + str(args.numofdocument) + " --------------------------\n")
+  A.printTable(args.numofdocument)
 
+  print("\n------------------------ Matriz similitud coseno entre documentos --------------------------\n")
+  A.printSimTable()
+  
 else:
   print('File not Found')
