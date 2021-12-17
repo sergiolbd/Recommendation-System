@@ -20,8 +20,8 @@ Para hacer uso de este programa es necesario ejecutarlo desde una terminal usado
 
 ### Código
 Para la realización de este recomendador se ha creado la clase **RecommendationSystem**, la cual dispone de los siguientes métodos: 
-* **```readFile```**: leé el fichero pasado como parámetro línea a línea.
-* **```cleanDocument```**: procesa el texto leido del fichero eliminando signos de puntuación, convirtiendo todo a minúscula, elimina números, etc. Además convierte cada línea del fichero en un array de arrays donde cada posición representa una palabra.
-* **```modelContent```**: se le pasa un índice y se encarga de calcular el TF, IDF y TF-IDF de un determinado término haciendo llamadas a otros métodos y retornando los valores obtenidos para un determinado término.
+* **```readFile(self, file)```**: leé el fichero pasado como parámetro línea a línea.
+* **```cleanDocument(self, linea)```**: procesa el texto leido del fichero eliminando signos de puntuación, convirtiendo todo a minúscula, elimina números, etc. Además convierte cada línea del fichero en un array de arrays donde cada posición representa una palabra.
+* **```modelContent(self, i)```**: se le pasa un índice y se encarga de calcular el TF, IDF y TF-IDF de un determinado término haciendo llamadas a otros métodos y retornando los valores obtenidos para un determinado término.
 * **```calculateSimCos(self, indexA, indexB)```**: retorna la similitud coseno entre los documentos A y B.
-* **```setSimTable(self)```: Recorre la tabla creada para la similitud entre documentos y hace llamadas al método calculateSimCos para cada par de documentos, rellenando con el valor obtenido dicha tabla.
+* **```setSimTable(self)```**: Recorre la tabla creada para la similitud entre documentos y hace llamadas al método calculateSimCos para cada par de documentos, rellenando con el valor obtenido dicha tabla.
